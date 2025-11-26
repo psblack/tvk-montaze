@@ -32,9 +32,6 @@ export async function createInvoice(formData: FormData) {
     await sql`INSERT INTO invoices (customer_id, amount, status, date) VALUES (${customerId}, ${amountInCents}, ${status}, ${date})`;
   } catch (error) {
     console.error(error);
-    return {
-      message: "Database Error: Failed to Create Invoice.",
-    };
   }
 
   revalidatePath("/dashboard/invoices");
@@ -56,8 +53,6 @@ export async function updateInvoice(id: string, formData: FormData) {
     await sql`
     UPDATE invoices SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status} WHERE id = ${id}`;
   } catch (error) {
-    // We'll also log the error to the console for now
-    console.error(error);
     return { message: "Database Error: Failed to Update Invoice." };
   }
 
